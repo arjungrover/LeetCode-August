@@ -1,0 +1,31 @@
+/*
+A-65, Z-90
+a-97 z-122
+
+*/
+
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        if(word.length()==0 || word.length()==1 )
+            return true;
+        
+        boolean flag1 =( (int)(word.charAt(0))>=65 && (int)(word.charAt(0))<=90 ) ?true:false;
+        
+        
+        boolean flag2 = ( (int)(word.charAt(1))>=65 && (int)(word.charAt(1))<=90) ?true:false;
+        if(!flag1 && flag2)
+            return false;
+        
+        for(int i=2;i<word.length();i++){
+            boolean ans = ( (int)(word.charAt(i))>=65 && (int)(word.charAt(i))<=90) ?true:false;
+           
+            if(flag1 && flag2 && !ans)
+                return false;
+            else if(flag1 && !flag2 && ans)
+                return false;
+            else if(!flag1 && !flag2 && ans)
+                return false;
+        }
+        return true;
+    }
+}
