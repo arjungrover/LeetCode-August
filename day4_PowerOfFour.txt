@@ -1,0 +1,38 @@
+/*
+Method 1: log of the given number on base 4, and if we get an integer then number is power of 4.
+Methode 2:
+a) There is only one bit set in the binary representation of n (or n is a power of 2)
+b) The count of zero bits before the (only) set bit is even.  [eg: 16 [10000] , 8[1000]]
+
+*/
+
+class Solution {
+    public boolean isPowerOfFour(int num) {
+        
+        if(num==0)
+            return false;
+        
+        int count_one = 0;
+        int count_zero = 0;
+        
+        System.out.println(Integer.toBinaryString(num));  
+        for(int i=0;i<32;i++){
+            int mask = (1<<i);
+            
+            System.out.println(mask&num);
+            
+           if( (mask&num)!=0 && count_one==1 )
+               return false;
+           else if( (mask&num)!=0 && count_one==0)
+               count_one++;
+           else if( (mask&num)==0 && count_one==0)
+               count_zero++;
+            
+        }
+        
+        if(count_zero%2==0)
+            return true;
+        else
+            return false;
+    }
+}
