@@ -1,0 +1,54 @@
+/*
+
+Maximum possible value to be stored = 1000000
+Considering each bit of a number reprsents a number
+Number of bits in one number(Numbers each number in the array can represent) = 32
+Total numbers required = 1000000/32 = 31250
+For example:
+number 0 can be reprsented by idx = 0, bit = 0 i.e. num[0] = 00000000000000000000000000000001
+number 37 can be represented by idx = 1(37/32), bit = 5(37%32) ie. num[1] = 00000000000000000000000000100000
+
+*/
+
+class MyHashSet {
+
+    /** Initialize your data structure here. */
+    int[] set;
+    public MyHashSet() {
+        set = new int[31251];
+    }
+    
+    public void add(int key) {
+        //set bit ON
+        set[getIdx(key)] |= getMask(key);   
+    }
+    
+    public void remove(int key) {
+        //set bit OFF
+        //1s complement of mask
+        set[getIdx(key)] &= (~getMask(key));
+    }
+    
+    /** Returns true if this set contains the specified element */
+    public boolean contains(int key) {
+        //if bit is ON
+        // System.out.println(( (set[getIdx(key)]&(getMask(key)))=0 ));
+        return ( ( (set[getIdx(key)])&(getMask(key)) )!=0 );
+    }
+    
+    private int getIdx(int key){
+        return (key/32);
+    }
+    private int getMask(int key){
+        int bit = (key%32);
+        return (1<<bit);
+    }
+}
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet obj = new MyHashSet();
+ * obj.add(key);
+ * obj.remove(key);
+ * boolean param_3 = obj.contains(key);
+ */
